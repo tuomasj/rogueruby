@@ -1,4 +1,3 @@
-require './entity_renderer'
 
 class RoomRenderer
   attr_reader :ui
@@ -6,9 +5,9 @@ class RoomRenderer
   WALL_TILE = "#"
   FLOOR_TILE = "."
 
-  def initialize(ui_klass = DebugUI)
-    @ui = ui_klass.new
-    @entity_renderer = EntityRenderer.new(ui_klass)
+  def initialize(ui)
+    @ui = ui
+    @entity_renderer = EntityRenderer.new(@ui)
   end
 
   def render(room, offset_x, offset_y)

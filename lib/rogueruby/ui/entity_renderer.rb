@@ -1,7 +1,7 @@
 class EntityRenderer
 
-  def initialize(ui_klass = DebugUI)
-    @ui = ui_klass.new
+  def initialize(ui)
+    @ui = ui
   end
 
   def render_entity(room, entity, offset_x, offset_y)

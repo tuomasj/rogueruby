@@ -15,7 +15,7 @@ class UI
   def end_draw
 
   end
-  
+
   def close
     close_screen
   end
@@ -54,9 +54,30 @@ class UI
   end
 
   def wait_input
-    setpos(0,0)
+    hide_cursor
     addstr(" ")
-    getch 
+    getch
+    show_cursor
+  end
+
+  def set_cursor_pos(x,y)
+    setpos(y,x)
+  end
+
+  def hide_cursor
+    curs_set(0)
+  end
+
+  def show_cursor
+    curs_set(1)
+  end
+
+  def window_width
+    cols
+  end
+
+  def window_height
+    lines
   end
 end
 
