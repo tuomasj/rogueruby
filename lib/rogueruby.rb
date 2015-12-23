@@ -12,7 +12,7 @@ require 'rogueruby/game/collision'
 require 'rogueruby/entity/entity'
 require 'rogueruby/entity/entity_factory'
 require 'rogueruby/entity/entity_container'
-require 'rogueruby/entity/entity'
+require 'rogueruby/entity/player'
 
 require 'rogueruby/world/world'
 require 'rogueruby/world/room'

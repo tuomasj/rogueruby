@@ -3,6 +3,7 @@ require_relative "../test_helper.rb"
 require 'rogueruby/ui/window'
 require 'rogueruby/game/collision'
 
+
 class TestWindow < Minitest::Test
 
   def test_window_has_all_necessary_methods
