@@ -11,6 +11,7 @@ class RoomRenderer
   end
 
   def render(room, offset_x, offset_y)
+    Logger::info("RoomRenderer.render()")
     ofs_x = 0
     ofs_y = 0
     ui.start_draw

@@ -33,6 +33,10 @@ class Room
     (max.y + max.height) - min.y
   end
 
+  def to_rect
+    OpenStruct.new( x:0, y:0, width: width, height: height)
+  end
+
   def set_position(x,y)
     @x = x
     @y = y

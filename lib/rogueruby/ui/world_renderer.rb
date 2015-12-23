@@ -13,15 +13,22 @@ class WorldRenderer
   end
 
   def render(world, player, window)
+    Logger::info("WorldRenderer.render()")
+    Logger::info("  window: #{window.inspect}")
+    Logger::info("  world: #{world} (#{world.rooms.rooms.size})")
     center_window(window, player)
     render_list = intersect_rooms(window)
+    Logger::info("  render_list.size = #{render_list.size}")
     render_rooms(render_list, window)
   end
 
   def intersect_rooms(window)
-    world.rooms.rooms.select do |room|
-      window.overlaps?(room)
-    end
+    Logger::info("WorldRenderer.intersect_rooms()")
+    #world.rooms.rooms.select do |room|
+
+    #  window.overlaps?(room.to_rect)
+    #end
+    world.rooms.rooms.select { |room| room }
   end
 
   def render_rooms(rooms, window)

@@ -13,9 +13,14 @@ class Logger
   def self.init_logger
     logger = Logger.new(STDOUT)
     logger.level = Logger::INFO
+    @output ||= logger
     logger.formatter = proc do |severity, datetime, progname, msg|
-       printf("[%5.5s] %s\n", severity, msg)
+       @output << sprintf("[%5.5s] %s\n\r", severity, msg)
     end
     logger
+  end
+
+  def self.set_output(param)
+    @output = param
   end
 end
