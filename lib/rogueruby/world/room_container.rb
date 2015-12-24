@@ -17,7 +17,6 @@ class RoomContainer
   end
 
   def create(params = {})
-    Logger.info("RoomContainer.create() params = #{params}")
     if params.fetch(:type, "") == "room"
       Logger.info("Creating room")
       rooms << Room.create(params)

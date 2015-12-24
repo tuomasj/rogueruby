@@ -3,4 +3,5 @@ class Player < Entity
     super(data)
     @type = :player
   end
+
 end

@@ -11,10 +11,8 @@ class RoomRenderer
   end
 
   def render(room, offset_x, offset_y)
-    Logger::info("RoomRenderer.render()")
     ofs_x = 0
     ofs_y = 0
-    ui.start_draw
     # draw room walls
     room.sections.each do |section|
       render_wall(section, ofs_x, ofs_y)
@@ -27,7 +25,6 @@ class RoomRenderer
     room.entities.each do |entity|
       @entity_renderer.render_entity(room, entity, ofs_x, ofs_y)
     end
-    ui.end_draw
   end
 
   def render_floor(section, offset_x, offset_y)

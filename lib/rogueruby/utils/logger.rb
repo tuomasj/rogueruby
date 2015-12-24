@@ -6,7 +6,7 @@ class Logger
     if @logger.respond_to? method_sym
       @logger.send(method_sym, arguments)
     else
-      @logger.error { "method #{method_sym} is missing." }
+      @logger.error("method #{method_sym} is missing.")
     end
   end
 
@@ -15,7 +15,9 @@ class Logger
     logger.level = Logger::INFO
     @output ||= logger
     logger.formatter = proc do |severity, datetime, progname, msg|
-       @output << sprintf("[%5.5s] %s\n\r", severity, msg)
+      output = sprintf("[%5.5s] %s\n\r", severity, msg)
+      @output << output
+      nil
     end
     logger
   end
@@ -23,4 +25,5 @@ class Logger
   def self.set_output(param)
     @output = param
   end
+
 end

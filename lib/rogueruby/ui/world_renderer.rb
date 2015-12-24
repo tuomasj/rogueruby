@@ -7,23 +7,20 @@ class WorldRenderer
   end
 
   def center_window(window, player)
-    x = window.width / 2 + player.x
-    y = window.height / 2 + player.y
-    window.set_position(x,y)
+    if window && player
+      x = window.width / 2 + player.x
+      y = window.height / 2 + player.y
+      window.set_position(x,y)
+    end
   end
 
   def render(world, player, window)
-    Logger::info("WorldRenderer.render()")
-    Logger::info("  window: #{window.inspect}")
-    Logger::info("  world: #{world} (#{world.rooms.rooms.size})")
     center_window(window, player)
     render_list = intersect_rooms(window)
-    Logger::info("  render_list.size = #{render_list.size}")
     render_rooms(render_list, window)
   end
 
   def intersect_rooms(window)
-    Logger::info("WorldRenderer.intersect_rooms()")
     #world.rooms.rooms.select do |room|
 
     #  window.overlaps?(room.to_rect)

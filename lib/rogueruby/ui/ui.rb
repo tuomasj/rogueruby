@@ -6,22 +6,33 @@ class UI
 
   include Curses
 
+  KEY_LEFT = Curses::KEY_LEFT
+  KEY_RIGHT = Curses::KEY_RIGHT
+  KEY_UP = Curses::KEY_UP
+  KEY_DOWN = Curses::KEY_DOWN
+
   attr_reader :game_window_width, :game_window_height
 
   def open
-    noecho
+
     init_screen
+    noecho
     logger_height = 6
+
     @game_window_width = screen_width
     @game_window_height = screen_height - logger_height
-    Logger::info("UI.open() @game_window_width: #{@game_window_width}, @game_window_height: #{@game_window_height}")
     @game_window = Curses::Window.new(game_window_height,game_window_width,0,0)
+    @game_window.idlok(true)
     @game_window.box("|", "-")
+    @game_window.scrollok(false)
     @log_window = Curses::Window.new(logger_height, screen_width, game_window_height, 0)
     @log_window.box("|", "-")
     @log_window.scrollok(true)
     @log_window.idlok(true)
-    Logger::set_output(@log_window)
+    @log_window.timeout = 0
+    @log_window.keypad(true)
+
+    Logger.set_output(@log_window)
 
   end
 
@@ -34,6 +45,7 @@ class UI
 
   def close
     @game_window.close
+    @log_window.close
     close_screen
   end
 
@@ -45,14 +57,12 @@ class UI
     if x1 == x2
       # vertical line
       (y1..y2).each do |j|
-        @game_window.setpos(j, x1)
-        @game_window.addstr(char)
+        draw_char(x1, j, char)
       end
     elsif y1 == y2
       # horizontal line
       (x1..x2).each do |i|
-        @game_window.setpos(y1, i)
-        @game_window.addstr(char)
+        draw_char(i, y1, char)
       end
     end
   end
@@ -60,8 +70,7 @@ class UI
   def fill_rect(x1, y1, x2, y2, char)
     (y1..y2).each do |y|
       (x1..x2).each do |x|
-        @game_window.setpos(y,x)
-        @game_window.addstr(char)
+        draw_char(x, y, char)
       end
     end
   end
@@ -70,15 +79,6 @@ class UI
 
     @game_window.setpos(y,x)
     @game_window.addstr(char)
-  end
-
-  def wait_input
-@log_window.refresh
-@game_window.refresh
-
-    hide_cursor
-    @game_window.getch
-    show_cursor
   end
 
   def set_cursor_pos(x,y)
@@ -101,6 +101,27 @@ class UI
     lines
   end
 
+  def get_input
+    val = @log_window.getch
+    return nil unless val
+    return KEY_DOWN if val == Curses::KEY_DOWN
+    return KEY_UP  if val == Curses::KEY_UP
+    return KEY_LEFT if val == Curses::KEY_LEFT
+    return KEY_RIGHT if val == Curses::KEY_RIGHT
+    val
+  end
+
+  def refresh(screen = nil)
+    if screen == nil
+      @game_window.refresh
+      @log_window.refresh
+    elsif screen == :game
+      @game_window.refresh
+    elsif screen == :log
+      @log_window.refresh
+    end
+
+  end
 
 end
 

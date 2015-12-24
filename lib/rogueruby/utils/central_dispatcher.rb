@@ -9,8 +9,7 @@ class CentralDispatcher
     @world = world
   end
 
-  def incoming(json_string)
-    Logger.info("CentralDispatcher.incoming(#{json_string})")
+  def incoming(json_string = "")
     begin
       obj = CentralDispatcher.symbolize(JSON.parse(json_string))
       if obj.has_key? :method
