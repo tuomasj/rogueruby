@@ -31,6 +31,7 @@ class UI
     @log_window.idlok(true)
     @log_window.timeout = 0
     @log_window.keypad(true)
+    hide_cursor
 
     Logger.set_output(@log_window)
 
@@ -46,6 +47,7 @@ class UI
   def close
     @game_window.close
     @log_window.close
+    show_cursor
     close_screen
   end
 

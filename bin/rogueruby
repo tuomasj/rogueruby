@@ -3,6 +3,7 @@ $:.unshift(File.expand_path("../../lib", __FILE__))
 
 
 require 'rogueruby'
+require 'io/console'
 
 def generate_move_message(entity, direction)
   { method:"move", entity_id: entity.id, direction: direction}.to_json
@@ -48,7 +49,7 @@ def main
       end
     end
     sleep 0.5
-    STDOUT.flush
+
     world_renderer.render(world, player, window)
   end
 
